@@ -1,4 +1,8 @@
 const app = require('./config/expressConfig');
+const handlebarsConfig = require('./config/handlebarsConfig');
 
-app();
+const PORT = 3000;
 
+handlebarsConfig(app);
+
+app.listen(PORT, () => `Server is listening on port: ${PORT}`)
