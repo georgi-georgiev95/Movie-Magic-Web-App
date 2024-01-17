@@ -1,5 +1,5 @@
-const app = require('./config/expressConfig');
-const handlebarsConfig = require('./config/handlebarsConfig');
+const app = require('./config/configExpress');
+const handlebarsConfig = require('./config/configHandlebars');
 
 const PORT = 3000;
 
