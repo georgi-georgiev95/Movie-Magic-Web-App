@@ -16,4 +16,10 @@ router.get('/search', (req, res) => {
     res.render('movies/search');
 });
 
+router.get('/details/:movieId', async (req, res) => {
+    const id = req.params.movieId;
+    const movie = await movieService.getOne(id).lean(); 
+    res.render('movies/details', { movie });
+})
+
 module.exports = router;
