@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const movieService = require('../services/movieService');
+const ratingHelper = require('../helpers/ratingHelper');
 
 router.get('/create', (req, res) => {
     res.render('movies/create');
@@ -19,7 +20,8 @@ router.get('/search', (req, res) => {
 router.get('/details/:movieId', async (req, res) => {
     const id = req.params.movieId;
     const movie = await movieService.getOne(id).lean(); 
-    res.render('movies/details', { movie });
+    const movieData = ratingHelper(movie);
+    res.render('movies/details', { movieData });
 })
 
 module.exports = router;
