@@ -13,15 +13,23 @@ router.post('/create', async (req, res) => {
     res.redirect('/');
 })
 
-router.get('/search', (req, res) => {
-    res.render('movies/search');
+router.get('/search', async (req, res) => {
+    const movies = movieService.getAll();
+    res.render('movies/search', {movies});
 });
+
+router.post('/search', async (req, res) => {
+    const { title, genre, year } = req.body;
+    const movies = await movieService.getAll(title, genre, year);
+    res.render('movies/search', { movies });
+});
+
 
 router.get('/details/:movieId', async (req, res) => {
     const id = req.params.movieId;
-    const movie = await movieService.getOne(id).lean(); 
+    const movie = await movieService.getOne(id).lean();
     const movieData = ratingHelper(movie);
     res.render('movies/details', { movieData });
-})
+});
 
 module.exports = router;
