@@ -47,9 +47,13 @@ router.get('/details/:movieId', async (req, res) => {
     const movieData = ratingHelper(movie);
     res.render('movies/details', { movieData });
 
-    console.log(err.message);
-
-
 });
+
+router.get('/details/:movieId/attach', async (req, res) => {
+    const id = req.params.movieId;
+    const movie = await movieService.getOne(id).lean();
+
+    res.render('movies/attach', {...movie});
+})
 
 module.exports = router;
