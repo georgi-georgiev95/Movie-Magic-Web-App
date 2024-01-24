@@ -5,4 +5,4 @@ const PORT = 3000;
 
 handlebarsConfig(app);
 
-app.listen(PORT, () => `Server is listening on port: ${PORT}`)
+app.listen(PORT, () => console.log(`Server is listening on port: ${PORT}`));
