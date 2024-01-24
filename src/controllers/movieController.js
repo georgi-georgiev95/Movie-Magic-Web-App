@@ -45,16 +45,18 @@ router.get('/details/:movieId', async (req, res) => {
     const id = req.params.movieId;
 
     const movie = await movieService.getOne(id).lean();
+    const casts = await castService.getByIds(movie.casts).lean();
+
     const movieData = ratingHelper(movie);
-    res.render('movies/details', { movieData });
+    res.render('movies/details', { movieData, casts });
 
 });
 
 router.get('/details/:movieId/attach', async (req, res) => {
     const id = req.params.movieId;
     const movie = await movieService.getOne(id).lean();
-    const casts = await castService.getAll().lean();
-    res.render('movies/attach', { ...movie, casts });
+    // const casts = await castService.getAll().lean();
+    res.render('movies/attach', { ...movie });
 });
 
 router.post('/details/:movieId/attach', async (req, res) => {
