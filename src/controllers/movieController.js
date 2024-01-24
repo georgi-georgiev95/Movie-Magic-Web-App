@@ -15,7 +15,7 @@ router.post('/create', async (req, res) => {
         res.redirect('/');
     } catch (err) {
         console.log(err.message);
-        res.status(400).end();
+        res.redirect('movies/create');
     }
 
     
@@ -34,7 +34,7 @@ router.post('/search', async (req, res) => {
         res.render('movies/search', { movies });
     } catch (err) {
         console.log(err.message);
-        res.status(400).end();
+        res.redirect('movies/search');
     }
     
 });
@@ -48,7 +48,6 @@ router.get('/details/:movieId', async (req, res) => {
         res.render('movies/details', { movieData });
     } catch (err) {
         console.log(err.message);
-        res.status(400).end();
     }
     
 });
