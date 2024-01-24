@@ -9,8 +9,16 @@ router.get('/create', (req, res) => {
 
 router.post('/create', async (req, res) => {
     const movieData = req.body;
-    await movieService.create(movieData);
-    res.redirect('/');
+
+    try {
+        await movieService.create(movieData);
+        res.redirect('/');
+    } catch (err) {
+        console.log(err.message);
+        res.status(400).end();
+    }
+
+    
 })
 
 router.get('/search', async (req, res) => {
@@ -20,16 +28,29 @@ router.get('/search', async (req, res) => {
 
 router.post('/search', async (req, res) => {
     const { title, genre, year } = req.body;
-    const movies = await movieService.getAll(title, genre, year);
-    res.render('movies/search', { movies });
+
+    try {
+        const movies = await movieService.getAll(title, genre, year);
+        res.render('movies/search', { movies });
+    } catch (err) {
+        console.log(err.message);
+        res.status(400).end();
+    }
+    
 });
 
 
 router.get('/details/:movieId', async (req, res) => {
     const id = req.params.movieId;
-    const movie = await movieService.getOne(id).lean();
-    const movieData = ratingHelper(movie);
-    res.render('movies/details', { movieData });
+    try {
+        const movie = await movieService.getOne(id).lean();
+        const movieData = ratingHelper(movie);
+        res.render('movies/details', { movieData });
+    } catch (err) {
+        console.log(err.message);
+        res.status(400).end();
+    }
+    
 });
 
 module.exports = router;
