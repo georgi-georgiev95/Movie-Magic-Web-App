@@ -8,7 +8,7 @@ const userController = require('./controllers/userController');
 const { isAuth} = require('./middlewares/authMiddleware'); 
 
 router.use(homeController);
-router.use('/movies', isAuth, movieController);
+router.use('/movies',  movieController);
 router.use('/casts', isAuth, castController);
 router.use('/users', userController);
 router.get('*', (req, res) => {
