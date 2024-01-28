@@ -11,7 +11,10 @@ router.get('/create', isAuth, (req, res) => {
 });
 
 router.post('/create', isAuth, async (req, res) => {
-    const movieData = req.body;
+    const movieData = {
+        ...req.body,
+        owner: req.user._id
+    }
 
     try {
         await movieService.create(movieData);
@@ -30,8 +33,16 @@ router.get('/details/:movieId', async (req, res) => {
     const movie = await movieService.getOne(id).lean();
     const casts = await castService.getByIds(movie.casts).lean();
 
+    let isOwner;
+
+    if (!movie.owner) {
+        isOwner = false;
+    } else {
+        isOwner = movie.owner?.toString() === req.user?._id;
+    }
+
     const movieData = ratingHelper(movie);
-    res.render('movies/details', { movieData, casts });
+    res.render('movies/details', { movieData, casts, isOwner });
 
 });
 
