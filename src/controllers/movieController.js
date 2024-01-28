@@ -66,7 +66,23 @@ router.get('/edit/:movieId', isAuth, async (req, res) => {
     const id = req.params.movieId;
     const movie = await movieService.getOne(id).lean();
 
-    res.render('movies/edit', {movie});
+    res.render('movies/edit', { movie });
+});
+
+router.post('/edit/:movieId', isAuth, async (req, res) => {
+    const movieData = req.body;
+
+    await movieService.update(req.params.movieId, movieData);
+
+    res.redirect(`/movies/details/${req.params.movieId}`);
+});
+
+router.get('/delete/:movieId', isAuth, async (req, res) => {
+    const id = req.params.movieId;
+
+    await movieService.delete(id);
+
+    res.redirect('/');
 })
 
 module.exports = router;

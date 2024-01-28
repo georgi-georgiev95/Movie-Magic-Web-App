@@ -26,3 +26,7 @@ exports.search = (title, genre, year) => {
 exports.getOne = (movieId) => Movie.findById(movieId).populate('casts');
 
 exports.attach = async (movieId, castId) => Movie.findByIdAndUpdate(movieId, { $push: { casts: castId } });
+
+exports.update = (movieId, movieData) => Movie.findByIdAndUpdate(movieId, movieData);
+
+exports.delete = (movieId) => Movie.findByIdAndDelete(movieId);
