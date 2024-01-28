@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+const User = require('../models/User');
 const userService = require('../services/userService');
 
 router.get('/register', (req, res) => {
@@ -21,5 +22,17 @@ router.post('/register', async (req, res) => {
     }
 
 });
+
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const token = await userService.login(email, password);
+        res.cookie('auth', token, { httpOnly: true });
+        res.redirect('/');
+    } catch (err) {
+        throw new Error(err);
+    }
+})
 
 module.exports = router;
