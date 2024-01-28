@@ -62,8 +62,11 @@ router.post('/details/:movieId/attach', isAuth, async (req, res) => {
     res.redirect(`/movies/details/${movieId}`);
 })
 
-router.get('/edit/:movieId', isAuth, (req, res) => {
-    res.render('movies/edit');
+router.get('/edit/:movieId', isAuth, async (req, res) => {
+    const id = req.params.movieId;
+    const movie = await movieService.getOne(id).lean();
+
+    res.render('movies/edit', {movie});
 })
 
 module.exports = router;
