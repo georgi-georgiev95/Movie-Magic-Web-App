@@ -22,26 +22,6 @@ router.post('/create', async (req, res) => {
 
 })
 
-router.get('/search', async (req, res) => {
-    const movies = await movieService.search().lean();
-    res.render('movies/search', { movies });
-});
-
-router.post('/search', async (req, res) => {
-    const { title, genre, year } = req.body;
-
-    try {
-        // const movies = await movieService.getAll(title, genre, year);
-        const movies = await movieService.search(title, genre, year).lean();
-        res.render('movies/search', { movies });
-    } catch (err) {
-        console.log(err.message);
-        res.redirect('movies/search');
-    }
-
-});
-
-
 router.get('/details/:movieId', async (req, res) => {
     const id = req.params.movieId;
 
